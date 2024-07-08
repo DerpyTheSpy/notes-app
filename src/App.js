@@ -1,25 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState, useEffect } from 'react';
+import NoteList from './components/NoteList';
+import NoteForm from './components/NoteForm';
 
-function App() {
+const App = () => {
+  const [notes, setNotes] = useState(() => {
+    const savedNotes = localStorage.getItem('notes');
+    return savedNotes ? JSON.parse(savedNotes) : [];
+  });
+
+  const [currentNote, setCurrentNote] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(notes));
+  }, [notes]);
+
+  const addNote = (note) => {
+    setNotes([...notes, note]);
+  };
+
+  const updateNote = (updatedNote) => {
+    setNotes(notes.map(note => (note.id === updatedNote.id ? updatedNote : note)));
+  };
+
+  const deleteNote = (id) => {
+    setNotes(notes.filter(note => note.id !== id));
+  };
+
+  const editNote = (note) => {
+    setCurrentNote(note);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-container">
+      <h1>Notes App</h1>
+      <NoteForm addNote={addNote} updateNote={updateNote} currentNote={currentNote} setCurrentNote={setCurrentNote} />
+      <NoteList notes={notes} deleteNote={deleteNote} editNote={editNote} />
     </div>
   );
-}
+};
 
 export default App;

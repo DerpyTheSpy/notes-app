@@ -1,0 +1,15 @@
+/* src/components/NoteList.css */
+.note-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  margin: 20px;
+  max-width: 1000px; /* Adjust as needed */
+}
+
+@media (max-width: 600px) {
+  .note-list {
+    grid-template-columns: 1fr;
+  }
+}
