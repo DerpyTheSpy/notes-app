@@ -1,51 +1,56 @@
 /* src/components/NoteForm.css */
 .note-form-container {
-    background-color: #FFFF88;
-    padding: 20px;
-    margin: 20px auto;
-    width: 320px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .note-form-title {
-    font-size: 14px;
-    font-weight: bold;
-    text-align: left;
-    opacity: 0.7;
-  }
-  
-  .note-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .note-form input,
-  .note-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .note-form textarea {
-    height: 100px;
-    font-size: 12px;
-    opacity: 0.7;
-  }
-  
-  .note-form button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #28a745;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .note-form button:hover {
-    background-color: #218838;
-  }
-  
+  background-color: #FFFF88;
+  padding: 20px;
+  margin: 20px auto;
+  width: 320px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.note-form-title {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: left;
+  opacity: 0.7;
+}
+
+.note-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.note-form input,
+.note-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.note-form textarea {
+  height: 100px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.note-form button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: #fff;
+  cursor: pointer;
+}
+
+.note-form button:hover {
+  background-color: #218838;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 10px;
+}

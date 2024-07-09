@@ -1,51 +1,62 @@
-import './NoteForm.css';
 import React, { useState, useEffect } from 'react';
+import './NoteForm.css';
 
 const NoteForm = ({ addNote, updateNote, currentNote, setCurrentNote }) => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [note, setNote] = useState({ title: '', content: '' });
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (currentNote) {
-      setTitle(currentNote.title);
-      setContent(currentNote.content);
+      setNote({
+        title: currentNote.title,
+        content: currentNote.content
+      });
+    } else {
+      setNote({ title: '', content: '' });
     }
   }, [currentNote]);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNote({
+      ...note,
+      [name]: value
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!note.title || !note.content) {
+      setError('Both title and content are required.');
+      return;
+    }
+    setError('');
     if (currentNote) {
-      updateNote({
-        ...currentNote,
-        title,
-        content,
-      });
+      updateNote({ ...note, id: currentNote.id });
       setCurrentNote(null);
     } else {
-      addNote({
-        id: Date.now(),
-        title,
-        content,
-      });
+      addNote({ ...note, id: Date.now() });
     }
-    setTitle('');
-    setContent('');
+    setNote({ title: '', content: '' });
   };
 
   return (
     <div className="note-form-container">
-      <div className="note-form-title">Add Note</div>
-      <form className="note-form" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="note-form">
+        <h2 className="note-form-title">Title</h2>
+        {error && <p className="error-message">{error}</p>}
         <input
           type="text"
+          name="title"
           placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={note.title}
+          onChange={handleChange}
         />
         <textarea
-          placeholder="Content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
+          name="content"
+          placeholder="Add Note"
+          value={note.content}
+          onChange={handleChange}
         ></textarea>
         <button type="submit">{currentNote ? 'Update Note' : 'Add Note'}</button>
       </form>

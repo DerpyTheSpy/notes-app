@@ -1,7 +1,7 @@
-import './App.css';
 import React, { useState, useEffect } from 'react';
 import NoteList from './components/NoteList';
 import NoteForm from './components/NoteForm';
+import './App.css';
 
 const App = () => {
   const [notes, setNotes] = useState(() => {

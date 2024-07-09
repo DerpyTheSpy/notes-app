@@ -1,5 +1,5 @@
-import './Note.css';
 import React, { useState } from 'react';
+import './Note.css';
 
 const Note = ({ note, deleteNote, editNote }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,7 +13,7 @@ const Note = ({ note, deleteNote, editNote }) => {
   };
 
   return (
-    <div>
+    <div className="note-container">
       <div className="note">
         <h2>{note.title}</h2>
         <button onClick={() => editNote(note)}>Edit</button>
