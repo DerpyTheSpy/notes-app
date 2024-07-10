@@ -36,6 +36,12 @@
   opacity: 0.7;
 }
 
+.note-form-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .note-form button {
   padding: 10px 20px;
   border: none;
@@ -49,8 +55,10 @@
   background-color: #218838;
 }
 
-.error-message {
-  color: red;
-  font-size: 12px;
-  margin-bottom: 10px;
+.note-form button[type="button"] {
+  background-color: #dc3545;
+}
+
+.note-form button[type="button"]:hover {
+  background-color: #c82333;
 }

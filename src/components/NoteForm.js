@@ -2,63 +2,75 @@ import React, { useState, useEffect } from 'react';
 import './NoteForm.css';
 
 const NoteForm = ({ addNote, updateNote, currentNote, setCurrentNote }) => {
-  const [note, setNote] = useState({ title: '', content: '' });
-  const [error, setError] = useState('');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
 
   useEffect(() => {
     if (currentNote) {
-      setNote({
-        title: currentNote.title,
-        content: currentNote.content
-      });
+      setTitle(currentNote.title);
+      setContent(currentNote.content);
     } else {
-      setNote({ title: '', content: '' });
+      setTitle('');
+      setContent('');
     }
   }, [currentNote]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNote({
-      ...note,
-      [name]: value
-    });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!note.title || !note.content) {
-      setError('Both title and content are required.');
+
+    if (title.trim() === '' || content.trim() === '') {
+      alert('Both title and content are required.');
       return;
     }
-    setError('');
+
     if (currentNote) {
-      updateNote({ ...note, id: currentNote.id });
+      updateNote({
+        ...currentNote,
+        title,
+        content,
+      });
       setCurrentNote(null);
     } else {
-      addNote({ ...note, id: Date.now() });
+      addNote({
+        id: Date.now(),
+        title,
+        content,
+      });
     }
-    setNote({ title: '', content: '' });
+
+    setTitle('');
+    setContent('');
+  };
+
+  const handleDiscardChanges = () => {
+    setCurrentNote(null);
+    setTitle('');
+    setContent('');
   };
 
   return (
     <div className="note-form-container">
-      <form onSubmit={handleSubmit} className="note-form">
-        <h2 className="note-form-title">Title</h2>
-        {error && <p className="error-message">{error}</p>}
+      <h2 className="note-form-title">{currentNote ? 'Edit Note' : 'Add Note'}</h2>
+      <form className="note-form" onSubmit={handleSubmit}>
         <input
           type="text"
-          name="title"
           placeholder="Title"
-          value={note.title}
-          onChange={handleChange}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <textarea
-          name="content"
-          placeholder="Add Note"
-          value={note.content}
-          onChange={handleChange}
+          placeholder="Content"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
         ></textarea>
-        <button type="submit">{currentNote ? 'Update Note' : 'Add Note'}</button>
+        <div className="note-form-buttons">
+          <button type="submit">{currentNote ? 'Update Note' : 'Add Note'}</button>
+          {currentNote && (
+            <button type="button" onClick={handleDiscardChanges}>
+              Discard Changes
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );
