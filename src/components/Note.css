@@ -11,6 +11,11 @@
   margin: 10px;
   width: 100%; /* Adjusted to fit grid columns */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.note.highlight {
+  box-shadow: 0 0 10px 5px rgba(0, 123, 255, 0.5);
 }
 
 .note h2 {
@@ -55,6 +60,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.modal-overlay.fade-in {
+  opacity: 1;
+}
+
+.modal-overlay.fade-out {
+  opacity: 0;
 }
 
 .modal {
@@ -64,6 +79,16 @@
   width: 320px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: relative;
+  transform: scale(0.5);
+  transition: transform 0.3s;
+}
+
+.modal.grow {
+  transform: scale(1);
+}
+
+.modal.shrink {
+  transform: scale(0.5);
 }
 
 .modal h2 {
@@ -94,4 +119,28 @@
 
 .modal .close-button:hover {
   color: red;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes growIn {
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes shrinkOut {
+  to {
+    transform: scale(0.5);
+  }
 }

@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Note.css';
 
 const Note = ({ note, deleteNote, editNote }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const handleQuickView = () => {
     setIsModalOpen(true);
-    setIsClosing(false);
+    setTimeout(() => {
+      setIsAnimating(true);
+    }, 0); // Allow state to update and then trigger animation
   };
 
   const handleCloseModal = () => {
-    setIsClosing(true);
+    setIsAnimating(false);
     setTimeout(() => {
       setIsModalOpen(false);
     }, 300); // Match this duration with the CSS animation duration
@@ -33,7 +35,7 @@ const Note = ({ note, deleteNote, editNote }) => {
   const contentPreview = limitToOneParagraph(note.content);
 
   return (
-    <div className="note-container">
+    <div className={`note-container ${isModalOpen ? 'highlight' : ''}`}>
       <div className="note">
         <h2>{note.title}</h2>
         <div className="content-preview">{contentPreview}</div>
@@ -42,8 +44,8 @@ const Note = ({ note, deleteNote, editNote }) => {
         <button onClick={handleQuickView}>Quick View</button>
       </div>
       {isModalOpen && (
-        <div className={`modal-overlay ${isClosing ? 'fade-out' : ''}`}>
-          <div className={`modal ${isClosing ? 'fade-out' : ''}`}>
+        <div className={`modal-overlay ${isAnimating ? 'fade-in' : 'fade-out'}`}>
+          <div className={`modal ${isAnimating ? 'grow' : 'shrink'}`}>
             <button className="close-button" onClick={handleCloseModal}>X</button>
             <h2>{note.title}</h2>
             <div className="modal-content">{renderContent(note.content)}</div>
