@@ -1,9 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Note.css';
 
 const Note = ({ note, deleteNote, editNote }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isModalOpen]);
+
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      handleCloseModal();
+    }
+  };
 
   const handleQuickView = () => {
     setIsModalOpen(true);
@@ -45,7 +64,7 @@ const Note = ({ note, deleteNote, editNote }) => {
       </div>
       {isModalOpen && (
         <div className={`modal-overlay ${isAnimating ? 'fade-in' : 'fade-out'}`}>
-          <div className={`modal ${isAnimating ? 'grow' : 'shrink'}`}>
+          <div ref={modalRef} className={`modal ${isAnimating ? 'grow' : 'shrink'}`}>
             <button className="close-button" onClick={handleCloseModal}>X</button>
             <h2>{note.title}</h2>
             <div className="modal-content">{renderContent(note.content)}</div>
