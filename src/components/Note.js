@@ -3,18 +3,23 @@ import './Note.css';
 
 const Note = ({ note, deleteNote, editNote }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   const handleQuickView = () => {
     setIsModalOpen(true);
+    setIsClosing(false);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsModalOpen(false);
+    }, 300); // Match this duration with the CSS animation duration
   };
 
-  const limitToThreeParagraphs = (content) => {
+  const limitToOneParagraph = (content) => {
     const paragraphs = content.split('\n');
-    return paragraphs.slice(0, 3).map((paragraph, index) => (
+    return paragraphs.slice(0, 1).map((paragraph, index) => (
       <p key={index} className="note-paragraph">{paragraph}</p>
     ));
   };
@@ -25,20 +30,20 @@ const Note = ({ note, deleteNote, editNote }) => {
     ));
   };
 
-  const contentPreview = note.content.length > 100 ? note.content.substring(0, 100) + '...' : note.content;
+  const contentPreview = limitToOneParagraph(note.content);
 
   return (
     <div className="note-container">
       <div className="note">
         <h2>{note.title}</h2>
-        <div className="content-preview">{limitToThreeParagraphs(contentPreview)}</div>
+        <div className="content-preview">{contentPreview}</div>
         <button onClick={() => editNote(note)}>Edit</button>
         <button onClick={() => deleteNote(note.id)}>Delete</button>
         <button onClick={handleQuickView}>Quick View</button>
       </div>
       {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal">
+        <div className={`modal-overlay ${isClosing ? 'fade-out' : ''}`}>
+          <div className={`modal ${isClosing ? 'fade-out' : ''}`}>
             <button className="close-button" onClick={handleCloseModal}>X</button>
             <h2>{note.title}</h2>
             <div className="modal-content">{renderContent(note.content)}</div>
