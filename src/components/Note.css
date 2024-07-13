@@ -107,9 +107,13 @@
   font-weight: bold;
   opacity: 0.7;
   margin: 0 0 10px 0;
-  white-space: nowrap; /* Prevent text from wrapping */
-  overflow: hidden; /* Hide overflowing text */
-  text-overflow: ellipsis; /* Display ellipsis for overflow */
+  /* Allow text to wrap and overflow with ellipsis */
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
 }
 
 .modal .modal-content {

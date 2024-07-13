@@ -48,12 +48,11 @@ const Note = ({ note, deleteNote, editNote }) => {
   };
 
   const renderContent = (content) => {
-    const paragraphs = content.split('\n').map((paragraph, index) => (
+    return content.split('\n').map((paragraph, index) => (
       <p key={index} className="note-paragraph">
         {paragraph}
       </p>
     ));
-    return paragraphs;
   };
 
   const contentPreview = limitToOneParagraph(note.content);
