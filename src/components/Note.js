@@ -6,6 +6,12 @@ const Note = ({ note, deleteNote, editNote }) => {
   const [isAnimating, setIsAnimating] = useState(false);
   const modalRef = useRef(null);
 
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      handleCloseModal();
+    }
+  };
+
   useEffect(() => {
     if (isModalOpen) {
       document.addEventListener('mousedown', handleClickOutside);
@@ -17,12 +23,6 @@ const Note = ({ note, deleteNote, editNote }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isModalOpen]);
-
-  const handleClickOutside = (event) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
-      handleCloseModal();
-    }
-  };
 
   const handleQuickView = () => {
     setIsModalOpen(true);
@@ -40,15 +40,20 @@ const Note = ({ note, deleteNote, editNote }) => {
 
   const limitToOneParagraph = (content) => {
     const paragraphs = content.split('\n');
-    return paragraphs.slice(0, 1).map((paragraph, index) => (
-      <p key={index} className="note-paragraph">{paragraph}</p>
-    ));
+    const firstParagraph = paragraphs[0];
+
+    return firstParagraph.length > 100
+      ? firstParagraph.substring(0, 100) + '...'
+      : firstParagraph;
   };
 
   const renderContent = (content) => {
-    return content.split('\n').map((paragraph, index) => (
-      <p key={index} className="note-paragraph">{paragraph}</p>
+    const paragraphs = content.split('\n').map((paragraph, index) => (
+      <p key={index} className="note-paragraph">
+        {paragraph}
+      </p>
     ));
+    return paragraphs;
   };
 
   const contentPreview = limitToOneParagraph(note.content);

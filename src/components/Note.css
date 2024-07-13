@@ -24,12 +24,21 @@
   font-weight: bold;
   opacity: 0.7;
   text-align: left;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Display ellipsis for overflow */
 }
 
 .note .content-preview {
   margin: 10px 0;
   font-size: 12px;
   opacity: 0.7;
+  max-height: 50px; /* Limit the height */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Display ellipsis for overflow */
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
 }
 
 .note .note-paragraph {
@@ -62,6 +71,7 @@
   justify-content: center;
   opacity: 0;
   transition: opacity 0.3s;
+  z-index: 1000; /* Ensure the overlay is on top */
 }
 
 .modal-overlay.fade-in {
@@ -81,6 +91,7 @@
   position: relative;
   transform: scale(0.5);
   transition: transform 0.3s;
+  z-index: 1001; /* Ensure the modal is on top of the overlay */
 }
 
 .modal.grow {
@@ -96,11 +107,20 @@
   font-weight: bold;
   opacity: 0.7;
   margin: 0 0 10px 0;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Display ellipsis for overflow */
 }
 
 .modal .modal-content {
   font-size: 12px;
   opacity: 0.7;
+  max-height: 300px; /* Adjust height as needed */
+  overflow-y: auto; /* Enable vertical scroll for overflow */
+  padding-right: 10px; /* Space for scrollbar */
+  line-height: 1.5; /* Add space between lines */
+  word-wrap: break-word; /* Break long words to prevent overflow */
+  word-break: break-all; /* Break words at any point if necessary */
 }
 
 .modal .note-paragraph {
@@ -115,6 +135,7 @@
   border: none;
   font-size: 16px;
   cursor: pointer;
+  z-index: 1002; /* Ensure the close button is on top of the modal */
 }
 
 .modal .close-button:hover {
