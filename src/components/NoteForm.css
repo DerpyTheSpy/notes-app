@@ -1,3 +1,4 @@
+/* src/components/NoteForm.css */
 .note-form-container {
   background-color: #FFFF88;
   padding: 20px;
@@ -61,4 +62,12 @@
 
 .note-form button[type="button"]:hover {
   background-color: #c82333;
+}
+
+.clear-button {
+  background-color: #6c757d; /* Grey color */
+}
+
+.clear-button:hover {
+  background-color: #5a6268; /* Darker grey */
 }

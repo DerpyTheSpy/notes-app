@@ -48,6 +48,11 @@ const NoteForm = ({ addNote, updateNote, currentNote, setCurrentNote }) => {
     setContent('');
   };
 
+  const handleClear = () => {
+    setTitle('');
+    setContent('');
+  };
+
   return (
     <div className="note-form-container">
       <h2 className="note-form-title">{currentNote ? 'Edit Note' : 'Add Note'}</h2>
@@ -65,9 +70,17 @@ const NoteForm = ({ addNote, updateNote, currentNote, setCurrentNote }) => {
         ></textarea>
         <div className="note-form-buttons">
           <button type="submit">{currentNote ? 'Update Note' : 'Add Note'}</button>
-          {currentNote && (
+          {currentNote ? (
             <button type="button" onClick={handleDiscardChanges}>
               Discard Changes
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="clear-button"
+              onClick={handleClear}
+            >
+              Clear
             </button>
           )}
         </div>
